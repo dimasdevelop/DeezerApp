@@ -1,5 +1,11 @@
 {
 	"expo": {
+		"sdkVersion": "37.0.0",
+		"android": {
+			"package": "com.jdlinux97.MyDeezerApp",
+			"versionCode": 1,
+			"icon": "./assets/images/icon.png"
+		},
 		"name": "MyDeezerApp",
 		"slug": "MyDeezerApp",
 		"platforms": ["ios", "android", "web"],
