@@ -10,7 +10,6 @@ import { MonoText } from '../components/StyledText'
 export default function HomeScreen() {
 	return (
 		<View style={styles.container}>
-			{this.props.navigation.state.params.data}
 			<ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 				<View style={styles.welcomeContainer}>
 					<Image
