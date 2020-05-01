@@ -2,7 +2,7 @@
 // const API = require('animeflv-scrapper')
 
 import React, { Component } from 'react'
-import { Image, ImageBackground, TouchableHighlight, Text, FlatList, View } from 'react-native'
+import { Image, ImageBackground, Linking, Text, FlatList, View } from 'react-native'
 
 import axios from 'axios'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -40,7 +40,12 @@ class Detail extends Component {
 			return (
 				<View style={styles.conten}>
 					{this.state.tracklist.map((element) => (
-						<Album key={element.title} element={element} navigation={this.props.navigation} />
+						<Album
+							key={element.title}
+							element={element}
+							navigation={this.props.navigation}
+							Ionicons={Ionicons}
+						/>
 					))}
 				</View>
 			)
@@ -55,7 +60,7 @@ class Detail extends Component {
 
 	render() {
 		const element = this.state.element
-		if (!element && !this.state.tracklist[0]) {
+		if (!element || !this.state.tracklist[0]) {
 			return <ProgressBar />
 		} else {
 			console.log(this.state.tracklist)
@@ -80,7 +85,7 @@ class Detail extends Component {
 						</View>
 					</View>
 					<View style={styles.buttonAling}>
-						<Button onPress={() => navigation.navigate('Detail', { element: element })}>
+						<Button onPress={() => Linking.openURL(element.link)}>
 							<Ionicons name='md-headset' size={25} style={{ marginBottom: -5 }} />
 						</Button>
 					</View>
@@ -95,7 +100,7 @@ class Detail extends Component {
 
 const styles = {
 	contentContainer: {
-		backgroundColor: 'rgba(137, 16, 159, 1)',
+		backgroundColor: '#242424',
 		flex: 1,
 	},
 	headerContainer: {

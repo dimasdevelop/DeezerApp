@@ -2,12 +2,12 @@
 // const API = require('animeflv-scrapper')
 
 import React from 'react'
-import { Text, View, Image, Linking } from 'react-native'
+import { Text, View, Image, Linking, ImageBackground } from 'react-native'
 import Card from './Card'
 import CardSection from './CardSection'
-import Button from './Button'
+import DetailButton from './DetailButton'
 
-const Album = ({ element, navigation }) => {
+const Album = ({ element, navigation, Ionicons }) => {
 	const { title, album, artist, link } = element
 
 	return (
@@ -18,13 +18,13 @@ const Album = ({ element, navigation }) => {
 				</View>
 				<View style={styles.headerContentStyle}>
 					<Text style={styles.headerTextStyle}>{title}</Text>
-					<Text>{artist.name}</Text>
+					<Text style={styles.subHeaderTextStyle}>{artist.name}</Text>
 				</View>
-			</CardSection>
-			<CardSection>
-				<Button onPress={() => navigation.navigate('Detail', { element: element })}>
-					Detalle
-				</Button>
+				<View style={styles.button}>
+					<DetailButton onPress={() => Linking.openURL(link)}>
+						<Ionicons name='md-headset' size={19} style={{ marginBottom: -5 }} />
+					</DetailButton>
+				</View>
 			</CardSection>
 		</Card>
 	)
@@ -37,6 +37,17 @@ const styles = {
 	},
 	headerTextStyle: {
 		fontSize: 18,
+		fontFamily: 'Do Hyeon',
+		color: '#EAECEE',
+		fontStyle: 'normal',
+		fontWeight: 'bold',
+	},
+	subHeaderTextStyle: {
+		fontSize: 14,
+		fontFamily: 'Do Hyeon',
+		color: '#ABB2B9',
+		fontStyle: 'normal',
+		fontWeight: 'normal',
 	},
 	thumbnailStyle: {
 		height: 50,
@@ -48,10 +59,24 @@ const styles = {
 		marginLeft: 10,
 		marginRight: 10,
 	},
+	backGroud: {
+		flex: 3,
+		resizeMode: 'cover',
+		justifyContent: 'center',
+		borderStyle: 'solid',
+
+		borderBottomColor: 'black',
+		borderBottomWidth: 1,
+	},
 	imageStyle: {
 		height: 300,
 		flex: 1,
 		width: null,
+	},
+	button: {
+		left: 320.8,
+		top: 7.8,
+		position: 'absolute',
 	},
 }
 export default Album
