@@ -10,11 +10,19 @@ import DetailButton from './DetailButton'
 const Album = ({ element, navigation, Ionicons }) => {
 	const { title, album, artist, link } = element
 
+	const img = () => {
+		if (album) {
+			return album.cover_medium
+		} else {
+			return element.image
+		}
+	}
+
 	return (
 		<Card>
 			<CardSection>
 				<View style={styles.thumbnailContainerStyle}>
-					<Image style={styles.thumbnailStyle} source={{ uri: album.cover_medium }} />
+					<Image style={styles.thumbnailStyle} source={{ uri: img() }} />
 				</View>
 				<View style={styles.headerContentStyle}>
 					<Text style={styles.headerTextStyle}>{title}</Text>
@@ -34,13 +42,17 @@ const styles = {
 	headerContentStyle: {
 		flexDirection: 'column',
 		justifyContent: 'space-around',
+		flexDirection: 'column',
+		flex: 0.8,
 	},
 	headerTextStyle: {
-		fontSize: 18,
+		fontSize: 16,
 		fontFamily: 'Do Hyeon',
 		color: '#EAECEE',
 		fontStyle: 'normal',
 		fontWeight: 'bold',
+		flexWrap: 'wrap',
+		flexDirection: 'row',
 	},
 	subHeaderTextStyle: {
 		fontSize: 14,

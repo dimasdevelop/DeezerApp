@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import * as React from 'react'
 
 import TabBarIcon from '../components/TabBarIcon'
-import HomeScreen from '../screens/HomeScreen'
 import Home from '../screens/Home'
 import LinksScreen from '../screens/LinksScreen'
 
@@ -18,21 +17,15 @@ export default function BottomTabNavigator({ navigation, route }) {
 	navigation.setOptions({ headerTitle: getHeaderTitle(route) })
 
 	return (
-		<BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+		<BottomTab.Navigator
+			style={{ backgroundColor: '#242424' }}
+			initialRouteName={INITIAL_ROUTE_NAME}>
 			<BottomTab.Screen
 				name='Home'
 				component={Home}
 				options={{
 					title: 'Home',
 					tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name='md-home' />,
-				}}
-			/>
-			<BottomTab.Screen
-				name='getStarted'
-				component={HomeScreen}
-				options={{
-					title: 'Get Started',
-					tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name='md-code-working' />,
 				}}
 			/>
 
@@ -55,6 +48,6 @@ function getHeaderTitle(route) {
 		case 'Home':
 			return 'DeezerApp'
 		case 'Links':
-			return 'Links to learn more'
+			return 'Links about this project'
 	}
 }

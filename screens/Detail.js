@@ -23,9 +23,9 @@ class Detail extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.state.element.artist.tracklist)
+		// console.log(this.state.element.artist.tracklist)
 		axios
-			.get(`https://api.deezer.com/artist/${this.state.element.artist.id}/top?limit=50`)
+			.get(`${this.state.element.tracklist}`)
 			.catch((error) => console.log(error))
 			.then((response) =>
 				this.setState({
@@ -36,17 +36,20 @@ class Detail extends Component {
 
 	renderData() {
 		if (this.state.tracklist[0]) {
-			console.log(this.state.element)
+			const self = this
 			return (
 				<View style={styles.conten}>
-					{this.state.tracklist.map((element) => (
-						<Album
-							key={element.title}
-							element={element}
-							navigation={this.props.navigation}
-							Ionicons={Ionicons}
-						/>
-					))}
+					{this.state.tracklist.map((element) => {
+						element.image = self.state.element.image
+						return (
+							<Album
+								key={element.title}
+								element={element}
+								navigation={this.props.navigation}
+								Ionicons={Ionicons}
+							/>
+						)
+					})}
 				</View>
 			)
 		} else {
@@ -57,30 +60,63 @@ class Detail extends Component {
 			)
 		}
 	}
+	backGroud() {
+		if (this.state.element.image) {
+			return this.state.element.image
+		} else {
+			return this.state.element.artistImage
+		}
+	}
+	contentHeader() {
+		if (this.state.element.artistImage) {
+			return (
+				<View>
+					<Image
+						style={styles.thumbnailStyle}
+						source={{ uri: this.state.element.artistImage }}
+					/>
+
+					<View style={styles.headerContentStyle}>
+						<Text style={styles.headerTextStyle}>{this.state.element.artistName}</Text>
+						<Text style={styles.subHeaderTextStyle}>{this.state.element.title}</Text>
+					</View>
+				</View>
+			)
+		} else if (this.state.element.artistName) {
+			styles.headerTextStyle.left = 24.8
+			styles.subHeaderTextStyle.left = 24.8
+			return (
+				<View>
+					<View style={styles.headerContentStyle}>
+						<Text style={styles.headerTextStyle}>{this.state.element.artistName}</Text>
+						<Text style={styles.subHeaderTextStyle}>{this.state.element.title}</Text>
+					</View>
+				</View>
+			)
+		} else {
+			return (
+				<View>
+					<View style={styles.headerContentStyle}>
+						<Text style={styles.simpleSubHeaderTextStyle}>{this.state.element.title}</Text>
+					</View>
+				</View>
+			)
+		}
+	}
 
 	render() {
 		const element = this.state.element
 		if (!element || !this.state.tracklist[0]) {
 			return <ProgressBar />
 		} else {
-			console.log(this.state.tracklist)
+			// console.log(this.state.tracklist)
 
 			return (
 				<ScrollView style={styles.contentContainer}>
 					<View>
 						<View style={styles.headerContainer}>
-							<ImageBackground
-								source={{ uri: element.album.cover_xl }}
-								style={styles.backGroud}>
-								<View>
-									<Image
-										style={styles.thumbnailStyle}
-										source={{ uri: element.artist.picture_xl }}
-									/>
-
-									<Text style={styles.headerTextStyle}>{element.artist.name}</Text>
-									<Text style={styles.subHeaderTextStyle}>{element.album.title}</Text>
-								</View>
+							<ImageBackground source={{ uri: this.backGroud() }} style={styles.backGroud}>
+								{this.contentHeader()}
 							</ImageBackground>
 						</View>
 					</View>
@@ -132,6 +168,12 @@ const styles = {
 		flex: 4,
 		top: 60,
 	},
+	headerContentStyle: {
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+		flexDirection: 'column',
+		flex: 0.8,
+	},
 	headerTextStyle: {
 		position: 'absolute',
 
@@ -149,6 +191,9 @@ const styles = {
 		letterSpacing: -0.015,
 
 		color: '#ffffff',
+
+		flexWrap: 'wrap',
+		flexDirection: 'row',
 	},
 
 	subHeaderTextStyle: {
@@ -168,6 +213,30 @@ const styles = {
 		letterSpacing: -0.015,
 
 		color: '#ffffff',
+
+		flexWrap: 'wrap',
+		flexDirection: 'row',
+	},
+	simpleSubHeaderTextStyle: {
+		position: 'absolute',
+
+		left: 24.8,
+		top: 95.5,
+		fontFamily: 'Do Hyeon',
+
+		fontStyle: 'normal',
+		fontWeight: 'bold',
+		fontSize: 25,
+		lineHeight: 40,
+		display: 'flex',
+		alignItems: 'center',
+		textAlign: 'center',
+		letterSpacing: -0.015,
+
+		color: '#ffffff',
+
+		flexWrap: 'wrap',
+		flexDirection: 'row',
 	},
 	buttonAling: {
 		left: 330.8,

@@ -2,45 +2,87 @@
 // const API = require('animeflv-scrapper')
 
 import React from 'react'
-import { Text, View, Image, Linking } from 'react-native'
+import { Text, View, Image, ImageBackground, TouchableOpacity } from 'react-native'
 import Card from './Card'
 import CardSection from './CardSection'
 import Button from './Button'
 
 const Album = ({ element, navigation }) => {
-	const { title, album, artist, link } = element
+	const onPress = () => navigation.navigate('Detail', { element: element })
+
+	const infoElement = () => {
+		if (!element.title) {
+			return (
+				<View>
+					<Text style={styles.headerOneTextStyle}> {element.artistName}</Text>
+
+					<Text>{element.title}</Text>
+				</View>
+			)
+		} else {
+			return (
+				<View>
+					<Text style={styles.headerTextStyle}>{element.title}</Text>
+					<Text>{element.artistName}</Text>
+				</View>
+			)
+		}
+	}
+	const imgBackground = () => {
+		if (element.image) {
+			return element.image
+		} else {
+			return element.artistImage
+		}
+	}
 
 	return (
-		<Card>
-			<CardSection>
-				<View style={styles.thumbnailContainerStyle}>
-					<Image style={styles.thumbnailStyle} source={{ uri: album.cover_medium }} />
-				</View>
-				<View style={styles.headerContentStyle}>
-					<Text style={styles.headerTextStyle}>{title}</Text>
-					<Text>{artist.name}</Text>
-				</View>
-			</CardSection>
-			<CardSection>
-				<Button onPress={() => navigation.navigate('Detail', { element: element })}>
-					Detalle
-				</Button>
-			</CardSection>
-		</Card>
+		<TouchableOpacity onPress={onPress}>
+			<Card>
+				<ImageBackground source={{ uri: imgBackground() }} style={styles.backGroud}>
+					<View style={styles.CardSection}>
+						<CardSection>
+							<View style={styles.headerContentStyle}>{infoElement()}</View>
+						</CardSection>
+					</View>
+				</ImageBackground>
+			</Card>
+		</TouchableOpacity>
 	)
 }
 
 const styles = {
+	backGroud: {
+		flex: 3,
+		resizeMode: 'cover',
+		justifyContent: 'center',
+		borderStyle: 'solid',
+
+		borderBottomColor: 'black',
+		borderBottomWidth: 1,
+	},
 	headerContentStyle: {
 		flexDirection: 'column',
 		justifyContent: 'space-around',
 	},
 	headerTextStyle: {
-		fontSize: 18,
+		fontSize: 17,
+		fontWeight: 'bold',
+		color: '#273746',
 	},
-	thumbnailStyle: {
-		height: 50,
-		width: 50,
+	headerOneTextStyle: {
+		top: '29.5%',
+
+		fontSize: 17,
+		fontWeight: 'bold',
+		color: '#273746',
+	},
+	CardSection: {
+		width: '100%',
+		height: 80,
+		top: '67.5%',
+
+		position: 'absolute',
 	},
 	thumbnailContainerStyle: {
 		justifyContent: 'center',

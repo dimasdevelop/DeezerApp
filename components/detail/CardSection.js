@@ -14,6 +14,8 @@ const styles = {
 		justifyContent: 'flex-start',
 		flexDirection: 'row',
 		position: 'relative',
+
+		flex: 1,
 	},
 }
 
